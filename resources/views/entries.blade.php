@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('container')
-    <h1 class="mb-5">{{ $title }}</h1>
+    <h1 class="mb-4">{{ $title }}</h1>
 
     @if ($entries->count() > 0)
         <div class="card mb-3">
-            <img src="https://source.unsplash.com/1200x200?{{ $entries[0]->category->name }}" class="card-img-top" alt="{{ $entries[0]->category->name }}">
+            <img src="https://source.unsplash.com/1200x300?{{ $entries[0]->category->name }}" class="card-img-top" alt="{{ $entries[0]->category->name }}">
 
             <div class="card-body text-center">
                 <h3 class="card-title"><a href="/entries/{{ $entries[0]->slug }}" class="text-decoration-none text-dark">{{ $entries[0]->title }}</a></h3>
@@ -23,7 +23,7 @@
             </div>
         </div>
     @else
-    <p class="text-center fs-4">No post found...</p>
+        <p class="text-center fs-4">No post found...</p>
     @endif
 
     <div class="container">

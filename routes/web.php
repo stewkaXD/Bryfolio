@@ -63,7 +63,7 @@ Route::get('/categories', function() {
 
 Route::get('/categories/{category:slug}', function(Category $category) {
     return view('entries', [
-        'title' => "Entry by Category: $category->name",
+        'title' => "Entries by Category: $category->name",
         'active' => 'categories',
         'entries' => $category->entries,
     ]);
