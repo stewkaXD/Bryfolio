@@ -17,7 +17,7 @@
                     {!! $entry->body !!}
                 </article>
 
-                <a href="/diary" class="text-decoration-none d-block my-4 pb-4">Back to Diary Entries</a>
+                <a href="/entries" class="text-decoration-none d-block my-4 pb-4">Back to Diary Entries</a>
             </div>
         </div>
     </div>    
