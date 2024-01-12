@@ -17,7 +17,7 @@
           </li>
           
           <li class="nav-item">
-            <a class="nav-link {{ ($active === "entries") ? 'active' : '' }}"  href="/diary">Diary</a>
+            <a class="nav-link {{ ($active === "entries") ? 'active' : '' }}"  href="/entries">Blog</a>
           </li>
           
           <li class="nav-item">

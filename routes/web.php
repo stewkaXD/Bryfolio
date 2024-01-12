@@ -34,7 +34,7 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::get('/diary', [EntryController::class, 'showAll']);
+Route::get('/entries', [EntryController::class, 'showAll']);
 // Route::get('/diary', function () {
 //     return view('entries', [
 //         "title" => "Entries",
