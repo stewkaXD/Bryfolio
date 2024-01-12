@@ -60,20 +60,3 @@ Route::get('/categories', function() {
         'categories' => Category::all()
     ]);
 });
-
-Route::get('/categories/{category:slug}', function(Category $category) {
-    return view('entries', [
-        'title' => "Entries by Category: $category->name",
-        'active' => 'categories',
-        'entries' => $category->entries,
-    ]);
-});
-
-
-Route::get('/authors/{author:username}', function(User $author) {
-    return view('entries', [
-        'title' => "Entries by Author: $author->name",
-        'entries' => $author->entries->load('category', 'author'),
-        'active' => 'author'
-    ]);
-});
