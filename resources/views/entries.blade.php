@@ -22,33 +22,34 @@
                 <a href="/entries/{{ $entries[0]->slug }}" class="text-decoration-none btn btn-primary">Read More</a>
             </div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                @foreach ($entries->skip(1) as $entry)
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="position-absolute bg-dark px-3 py-2 rounded"><a href="/categories/{{ $entry->category->slug }}" class="text-decoration-none text-light">{{ $entry->category->name }}</a></div>
+
+                            <img src="https://source.unsplash.com/500x250?{{ $entry->category->name }}" class="card-img-top" alt="{{ $entry->category->name }}">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{  $entry->title }}</h5>
+                                <p>
+                                    <small class="text-muted">
+                                        By: <a href="/authors/{{ $entry->author->username }}" class="text-decoration-none">{{ $entry->author->name }}</a> 
+                                        {{ $entry->created_at->diffForHumans() }}
+                                    </small>
+                                </p>
+                                <p class="card-text">{{ $entry->excerpt }}</p>
+                                <a href="/entries/{{ $entry->slug }}" class="btn btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     @else
         <p class="text-center fs-4">No post found...</p>
     @endif
-
-    <div class="container">
-        <div class="row">
-            @foreach ($entries->skip(1) as $entry)
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="position-absolute bg-dark px-3 py-2 rounded"><a href="/categories/{{ $entry->category->slug }}" class="text-decoration-none text-light">{{ $entry->category->name }}</a></div>
-
-                        <img src="https://source.unsplash.com/500x250?{{ $entry->category->name }}" class="card-img-top" alt="{{ $entry->category->name }}">
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{  $entry->title }}</h5>
-                            <p>
-                                <small class="text-muted">
-                                    By: <a href="/authors/{{ $entry->author->username }}" class="text-decoration-none">{{ $entry->author->name }}</a> 
-                                    {{ $entry->created_at->diffForHumans() }}
-                                </small>
-                            </p>
-                            <p class="card-text">{{ $entry->excerpt }}</p>
-                            <a href="/entries/{{ $entry->slug }}" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+    
 @endsection
