@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Cviebrock\EloquentSluggable\Sluggable;
+
 class Entry extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     // buat enable mass assignment
     // biar field2 yg boleh diisi apa 
@@ -56,5 +58,14 @@ class Entry extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

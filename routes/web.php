@@ -74,4 +74,5 @@ Route::get('/dashboard', function() {
     return view('dashboard.index');
 })->middleware('auth');
 
+Route::get('/dashboard/entries/checkSlug', [DashboardEntryController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/entries', DashboardEntryController::class)->middleware('auth');

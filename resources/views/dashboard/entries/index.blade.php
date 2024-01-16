@@ -6,6 +6,10 @@
   <h1 class="h2">My Entries</h1>
 </div>
 
+<div class="mb-2">
+    <a href="/dashboard/entries/create" class="btn btn-primary">Create New Entry</a>
+</div>
+
 <div class="table-responsive col-lg-8">
     <table class="table table-striped table-sm">
       <thead>

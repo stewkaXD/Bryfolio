@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Entry;
 use Illuminate\Http\Request;
+
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class DashboardEntryController extends Controller
 {
@@ -26,7 +29,9 @@ class DashboardEntryController extends Controller
      */
     public function create() //tampilin CREATE entries
     {
-        //
+        return view('dashboard.entries.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -37,7 +42,7 @@ class DashboardEntryController extends Controller
      */
     public function store(Request $request) //CREATE entries
     {
-        //
+        return $request;
     }
 
     /**
@@ -85,5 +90,11 @@ class DashboardEntryController extends Controller
     public function destroy(Entry $entry) //DELETE entry (duh)
     {
         //
+    }
+
+    public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Entry::class, 'slug', $request->title);
+        return response()->json(['slug' => $slug]);
     }
 }
