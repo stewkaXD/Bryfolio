@@ -7,33 +7,50 @@
 </div>
 
 <div class="col-lg-8">
-    <form action="/dashboard/entries" method="POST">
+    <form action="/dashboard/entries" method="POST" class="mb-5">
         @csrf
 
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title">
+          <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" required value="{{ old('title') }}" autofocus>
+          @error('title')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+          @enderror
         </div>
 
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" disabled readonly>
+            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" readonly value="{{ old('slug') }}">
+            @error('slug')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label for="category" class="form-label">Pick a category for your entry</label>
             <select class="form-select" name="category_id">
-                {{-- <option selected>Open this select menu</option> --}}
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @if (old('category_id') == $category->id)
+                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                    @else
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
-            <input id="body" type="hidden" name="body">
+            <input id="body" type="hidden" name="body" value="{{ old('body') }}">
             <trix-editor input="body"></trix-editor>
+            @error('body')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+
         </div>
 
         <button type="submit" class="btn btn-primary">Publish your entry!</button>
