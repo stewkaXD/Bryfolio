@@ -29,7 +29,7 @@ class DashboardEntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() //tampilin CREATE entries
+    public function create() //tampilin Add entry
     {
         return view('dashboard.entries.create', [
             'categories' => Category::all()
@@ -42,7 +42,7 @@ class DashboardEntryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) //CREATE entries
+    public function store(Request $request) //CREATE entry
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
@@ -57,7 +57,7 @@ class DashboardEntryController extends Controller
 
         Entry::create($validatedData);
 
-        return redirect('/dashboard/entries')->with('success', 'Success! Your post has been added!');
+        return redirect('/dashboard/entries')->with('success', 'Success! Your entry has been added!');
     }
 
     /**
@@ -66,7 +66,7 @@ class DashboardEntryController extends Controller
      * @param  \App\Models\Entry  $entry
      * @return \Illuminate\Http\Response
      */
-    public function show(Entry $entry) //READ entries
+    public function show(Entry $entry) //READ entry
     {
         return view('dashboard.entries.show', [
             'entry' => $entry
@@ -79,9 +79,12 @@ class DashboardEntryController extends Controller
      * @param  \App\Models\Entry  $entry
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entry $entry) //tampilin UPDATE entry
+    public function edit(Entry $entry) //tampilin Edit entry
     {
-        //
+        return view('dashboard.entries.edit', [
+            'entry' => $entry,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -93,7 +96,21 @@ class DashboardEntryController extends Controller
      */
     public function update(Request $request, Entry $entry) //UPDATE entry
     {
-        //
+        $rules = ([
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'body' => 'required'
+        ]);
+
+        if ($request->slug != $entry->slug) {
+            $rules['slug'] = 'required|unique:entries';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        Entry::where('id', $entry->id)->update($validatedData);
+
+        return redirect('/dashboard/entries')->with('success', 'Your entry has been updated!');
     }
 
     /**
@@ -104,7 +121,9 @@ class DashboardEntryController extends Controller
      */
     public function destroy(Entry $entry) //DELETE entry (duh)
     {
-        //
+        Entry::destroy($entry->id);
+
+        return redirect('/dashboard/entries')->with('success', 'Your entry has been successfully deleted!');
     }
 
     public function checkSlug(Request $request)
