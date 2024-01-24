@@ -11,7 +11,13 @@
                     By: <a href="/entries?author={{ $entry->author->username }}" class="text-decoration-none">{{ $entry->author->name }}</a> in <a href="/entries?category={{ $entry->category->slug }}" class="text-decoration-none">{{ $entry->category->name }}</a>
                 </p>
 
-                <img src="https://source.unsplash.com/1200x400?{{ $entry->category->name }}" alt="{{ $entry->category->name }}" class="img-fluid">
+                @if ($entry->image)
+                    <div style="max-height: 350px; overflow:hidden">
+                        <img src="{{ asset('storage/' .$entry->image) }}" alt="{{ $entry->category->name }}" class="img-fluid">
+                    </div>
+                @else
+                    <img src="https://source.unsplash.com/1200x400?{{ $entry->category->name }}" alt="{{ $entry->category->name }}" class="img-fluid">
+                @endif
         
                 <article class="my-3 fs-5">
                     {!! $entry->body !!}
