@@ -7,6 +7,7 @@ use App\Models\Entry;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
@@ -113,6 +114,13 @@ class DashboardEntryController extends Controller
 
         $validatedData = $request->validate($rules);
 
+        if($request->file('image')) {
+            if($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('image')->store('entry-images');
+        }
+
         Entry::where('id', $entry->id)->update($validatedData);
 
         return redirect('/dashboard/entries')->with('success', 'Your entry has been updated!');
@@ -126,6 +134,10 @@ class DashboardEntryController extends Controller
      */
     public function destroy(Entry $entry) //DELETE entry (duh)
     {
+        if($entry->image) {
+            Storage::delete($entry->image);
+        }
+
         Entry::destroy($entry->id);
 
         return redirect('/dashboard/entries')->with('success', 'Your entry has been successfully deleted!');
