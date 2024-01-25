@@ -6,6 +6,8 @@ use App\Http\Controllers\EntryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardEntryController;
+use App\Http\Controllers\AdminCategoryController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,3 +78,5 @@ Route::get('/dashboard', function() {
 
 Route::get('/dashboard/entries/checkSlug', [DashboardEntryController::class, 'checkSlug'])->middleware('auth');
 Route::resource('/dashboard/entries', DashboardEntryController::class)->middleware('auth');
+
+Route::resource('/dashboard/categories', AdminCategoryController::class)->except('show')->middleware('admin');
